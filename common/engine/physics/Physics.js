@@ -1,4 +1,4 @@
-import { vec3, mat4, quat, vec4, mat3 } from "../../lib/gl-matrix-module.js";
+import { vec3, mat4, quat, vec4, mat3 } from "../../../lib/gl-matrix-module.js";
 
 export class Physics {
     constructor(scene, player, enemies) {

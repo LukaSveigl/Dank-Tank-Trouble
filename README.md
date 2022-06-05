@@ -1,5 +1,6 @@
 # ES6/WebGL 2.0 Game
-This project is based on ES6/WebGL 2.0 based video game for a CS Undergraduate course in computer graphics. 
+This project is based on ES6/WebGL 2.0 based video game for a CS Undergraduate course in computer graphics. The template for the project
+was kindly provided to us by our T.A Žiga Lesar, although it has been reworked in this project.
 The game was created by Peter Savnik (graphics designer), Luka Šveigl (main developer) and Nejc Vrčon Zupan (team lead and sound designer), 
 and it's developement is continued by Peter Savnik and Luka Šveigl.
 
@@ -12,7 +13,7 @@ The code does not need to be built, but requires a server
 capable of serving static files (WebGL+CORS restrictions). A basic Node.js
 implementation is available in `bin/server.js`.
 
-# Project structure
+# Project structure - currently obsolete
 The project is structured as follows:
 
 - The root directory contains `index.html`, the project's front page that
@@ -47,6 +48,8 @@ The project is structured as follows:
 # Used technologies
 This project is written in ES6, and uses the graphical library WebGL. The menus are created with
 DatGUI, and all 3D math is done using the gl-Matrix library.
+
+# Detailed explanation
 
 # Goals
 - Add multiple maps

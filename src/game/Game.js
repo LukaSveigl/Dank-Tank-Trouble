@@ -1,9 +1,9 @@
 import { MenuManager } from "../managers/MenuManager.js";
 import { SoundManager } from "../managers/SoundManager.js";
 
-import { SelectGameComponent } from "../game_components/SelectGameComponent.js";
-import { MainGameComponent } from "../game_components/MainGameComponent.js";
-import { EndGameComponent } from "../game_components/EndGameComponent.js";
+import { SelectGameComponent } from "../game-states/SelectGameComponent.js";
+import { MainGameComponent } from "../game-states/MainGameComponent.js";
+import { EndGameComponent } from "../game-states/EndGameComponent.js";
 
 // Define constants used in this class - used to avoid "magic numbers"
 const gameStates = {
@@ -51,7 +51,7 @@ export class Game {
         // Try to get WebGL2 canvas context
         try {
             this.gl = this.canvas.getContext("webgl2", glOptions);
-        } catch (error) {}
+        } catch (error) { }
 
         // If context couldn't be obtained, throw error
         if (!this.gl) {

@@ -1,13 +1,16 @@
-import { Game } from "./game/Game.js";
-import { GUI } from "../lib/dat.gui.module.js";
-import { Light } from "../common/gltf_components/Light.js";
+/**
+ * The application's main entry point.
+ */
 
+import { Game } from "./game/Game.js";
+
+/** The game object. */
 let game = null;
 
+/** 
+ * When the window is loaded, the game is created and the game loop is started.
+ */
 document.addEventListener("DOMContentLoaded", () => {
-	// Get canvas element
-	const canvas = document.querySelector("canvas");
-	//const gui = new GUI();
-	// Create new game instance
-	game = new Game(canvas);
+    const canvas = document.querySelector("canvas");
+    game = new Game(canvas);
 });
