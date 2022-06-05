@@ -1,5 +1,11 @@
 # ES6/WebGL 2.0 Game
-An ES6/WebGL 2.0 based video game for a CS Undergraduate course in computer graphics.
+This project is based on ES6/WebGL 2.0 based video game for a CS Undergraduate course in computer graphics. 
+The game was created by Peter Savnik (graphics designer), Luka Šveigl (main developer) and Nejc Vrčon Zupan (team lead and playtester), 
+and it's developement is continued by Peter Savnik and Luka Šveigl.
+
+# Gameplay
+Dank tank trouble is a 3rd person vehicle shooter, featuring multiple different tanks, enemy types and terrains in which 
+the battles are fought. It is controlled by using a mouse and WASD keys.
 
 # Building and running
 The code does not need to be built, but requires a server
@@ -11,9 +17,7 @@ The project is structured as follows:
 
 - The root directory contains `index.html`, the project's front page that
   is used for showcasing code.
-- The `lib` directory holds the libraries. We use libraries when something
-  is too tedious or prone to error if written by hand or out of the scope of
-  this project.
+- The `lib` directory holds the libraries used in the project.
 - The `common` directory contains all the code and resources that are used
   in multiple systems of this project.
   - The `engine` directory contains all elements that interact directly with 
@@ -39,3 +43,7 @@ The project is structured as follows:
   - The `menus` directory contains implementations of a basic menu and all other
     HUD displays.
   - The `shaders` directory contains implementations of shaders.
+
+# Used technologies
+This project is written in ES6, and uses the graphical library WebGL. The menus are created with
+DatGUI, and all 3D math is done using the gl-Matrix library.
