@@ -1,6 +1,6 @@
 # ES6/WebGL 2.0 Game
 This project is based on ES6/WebGL 2.0 based video game for a CS Undergraduate course in computer graphics. 
-The game was created by Peter Savnik (graphics designer), Luka Šveigl (main developer) and Nejc Vrčon Zupan (team lead and playtester), 
+The game was created by Peter Savnik (graphics designer), Luka Šveigl (main developer) and Nejc Vrčon Zupan (team lead and sound designer), 
 and it's developement is continued by Peter Savnik and Luka Šveigl.
 
 # Gameplay
@@ -47,3 +47,13 @@ The project is structured as follows:
 # Used technologies
 This project is written in ES6, and uses the graphical library WebGL. The menus are created with
 DatGUI, and all 3D math is done using the gl-Matrix library.
+
+# Goals
+- Add multiple maps
+- Add more enemies, maybe bosses
+- Add more player tanks
+- Add more varied terrain
+- Rewrite the project
+- Add visual damage indicators
+- Add better environment simulation - rain, etc.
+- Add campaign, maybe
