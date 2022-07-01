@@ -1,7 +1,7 @@
 import { GameState } from "./GameState.js";
 
-//import { Renderer } from "../../common/engine/graphics/Renderer.js"
-//import { GLTFLoader } from "../../common/engine/gltf-loader/GLTFLoader.js"
+import { Renderer } from "../../common/engine/graphics/Renderer.js"
+import { GLTFLoader } from "../../common/engine/gltf-loader/GLTFLoader.js"
 
 /**
  * @class SelectMapState - game state that implements the selection of the game map.

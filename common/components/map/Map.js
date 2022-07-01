@@ -22,8 +22,10 @@ export class Map {
         this.url = options.url;
 
         this.properties = {
-            lightPosition: options.lightPosition === undefined ? [0, 0, 0] : options.lightPosition,
-            cameraPosition: options.cameraPosition === undefined ? [0, 0, 0] : options.cameraPosition,
+            lightPosition: options.lightPosition === undefined ?
+                mapConstants.defaultLightPosition : options.lightPosition,
+            cameraPosition: options.cameraPosition === undefined ?
+                mapConstants.defaultCameraPosition : options.cameraPosition,
         };
     }
 
@@ -36,3 +38,10 @@ export class Map {
     }
 
 }
+
+const mapConstants = {
+    defaultLightPosition: [0, 0, 0],
+    defaultCameraPosition: [0, 0, 0],
+};
+
+Object.freeze(mapConstants);

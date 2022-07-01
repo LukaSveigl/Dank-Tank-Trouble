@@ -26,9 +26,9 @@ export class Tank {
         };
 
         this.properties = {
-            maxHealth: options.maxHealth === undefined ? 100 : options.maxHealth,
-            velocity: options.velocity === undefined ? 1 : options.velocity,
-            damage: options.damage === undefined ? 10 : options.damage,
+            maxHealth: options.maxHealth === undefined ? tankConstants.defaultHealth : options.maxHealth,
+            velocity: options.velocity === undefined ? tankConstants.defaultVelocity : options.velocity,
+            damage: options.damage === undefined ? tankConstants.defaultDamage : options.damage,
         };
     }
 
@@ -43,3 +43,11 @@ export class Tank {
     }
 
 }
+
+const tankConstants = {
+    defaultHealth: 100,
+    defaultVelocity: 1,
+    defaultDamage: 10,
+};
+
+Object.freeze(tankConstants);

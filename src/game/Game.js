@@ -1,9 +1,9 @@
 import { MenuManager } from "../managers/MenuManager.js";
 import { SoundManager } from "../managers/SoundManager.js";
 
-import { SelectGameComponent } from "../game-states/SelectGameComponent.js";
-import { MainGameComponent } from "../game-states/MainGameComponent.js";
-import { EndGameComponent } from "../game-states/EndGameComponent.js";
+//import { SelectGameComponent } from "../game-states/SelectGameComponent.js";
+//import { MainGameComponent } from "../game-states/MainGameComponent.js";
+//import { EndGameComponent } from "../game-states/EndGameComponent.js";
 
 export class Game {
     constructor(canvas, glOptions) {

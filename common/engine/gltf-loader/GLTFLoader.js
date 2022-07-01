@@ -1,14 +1,14 @@
-import { BufferView } from "../../gltf-components/BufferView.js";
-import { Accessor } from "../../gltf-components/Accessor.js";
-import { Sampler } from "../../gltf-components/Sampler.js";
-import { Texture } from "../../gltf-components/Texture.js";
-import { Material } from "../../gltf-components/Material.js";
-import { Primitive } from "../../gltf-components/Primitive.js";
-import { Mesh } from "../../gltf-components/Mesh.js";
-import { PerspectiveCamera } from "../../gltf-components/PerspectiveCamera.js";
-import { OrthographicCamera } from "../../gltf-components/OrthographicCamera.js";
-import { Node } from "../../gltf-components/Node.js";
-import { Scene } from "../../gltf-components/Scene.js";
+import { BufferView } from "./gltf-components/BufferView.js";
+import { Accessor } from "./gltf-components/Accessor.js";
+import { Sampler } from "./gltf-components/Sampler.js";
+import { Texture } from "./gltf-components/Texture.js";
+import { Material } from "./gltf-components/Material.js";
+import { Primitive } from "./gltf-components/Primitive.js";
+import { Mesh } from "./gltf-components/Mesh.js";
+import { PerspectiveCamera } from "./gltf-components/PerspectiveCamera.js";
+import { OrthographicCamera } from "./gltf-components/OrthographicCamera.js";
+import { Node } from "./gltf-components/Node.js";
+import { Scene } from "./gltf-components/Scene.js";
 
 // This class loads all GLTF resources and instantiates
 // the corresponding classes. Keep in mind that it loads
