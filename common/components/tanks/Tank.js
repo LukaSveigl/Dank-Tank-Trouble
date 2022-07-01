@@ -5,7 +5,7 @@ export class Tank {
 
     /**
      * Constructs a new Tank object.
-     * @param {string} name - name of the tank.
+     * @param {String} name - name of the tank.
      * @param {Object} options - the properties of the tank (in JSON form).
      */
     constructor(name, options) {
@@ -13,7 +13,12 @@ export class Tank {
             throw new Error("Tank name, options are required.");
         }
 
+        if (options.url === undefined) {
+            throw new Error("Tank data must be linked to a tank gltf file!");
+        }
+
         this.name = name;
+        this.url = options.url;
 
         this.models = {
             top: null,

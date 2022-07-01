@@ -5,18 +5,18 @@
         "health": 100,
         "speed": 1,
         "damage": 10,
-        "url": "common/models/tanks/tank1/tank1.gltf"
+        "url": "common/assets/models/tanks/tank1/tank1.gltf"
     },
     "Renault FT": {
         "health": 75,
         "speed": 2,
         "damage": 8,
-        "url": "common/models/tanks/tank2/tank2.gltf"
+        "url": "common/assets/models/tanks/tank2/tank2.gltf"
     },
     "Little Willie": {
         "health": 200,
         "speed": 0.5,
         "damage": 20,
-        "url": "common/models/tanks/tank3/tank3.gltf"
+        "url": "common/assets/models/tanks/tank3/tank3.gltf"
     }
 }

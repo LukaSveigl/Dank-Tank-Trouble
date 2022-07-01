@@ -1,5 +1,5 @@
-import { Tank } from "../../components/tanks/Tank";
-import { Loader } from "./Loader";
+import { Tank } from "../../components/tanks/Tank.js";
+import { Loader } from "./Loader.js";
 
 /**
  * @class TankLoader - loads properties of tanks from JSON files.
@@ -15,7 +15,7 @@ export class TankLoader extends Loader {
 
     /**
      * Creates a Tank object from the JSON object of the given name.
-     * @param {string} name - the name of the tank. 
+     * @param {String} name - the name of the tank. 
      * @returns a new Tank object created from the JSON of tank with the given name.
      */
     getTank(name) {

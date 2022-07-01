@@ -1,0 +1,10 @@
+{
+    "_description1": "This file contains the data for the map previews used in map selection.",
+    "_description2": "To add a map preview, simply add new map data to the list below.",
+    "A-map": {
+        "url": "common/assets/models/maps/previews/A-map/a map.gltf"
+    },
+    "B-map": {
+        "url": "common/assets/models/maps/previews/B-map/b map.gltf"
+    }
+}

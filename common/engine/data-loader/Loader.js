@@ -1,5 +1,5 @@
 /**
- * @class Loader - loads properties of objects from JSON files. Use as an interface.
+ * @class Loader - loads properties of objects from JSON files. Used as an interface.
  */
 export class Loader {
 
@@ -16,7 +16,7 @@ export class Loader {
 
     /**
      * Gets the JSON object at the URL.
-     * @param {string} url - the URL of the JSON file.
+     * @param {String} url - the URL of the JSON file.
      * @returns the JSON object of the given url.
      */
     fetchJson(url) {
@@ -27,7 +27,7 @@ export class Loader {
 
     /**
      * Loads the entire JSON file.
-     * @param {string} url - the URL of the JSON file. 
+     * @param {String} url - the URL of the JSON file. 
      */
     async load(url) {
         this.jsonUrl = new URL(url, window.location);

@@ -1,11 +1,11 @@
-import { Renderer } from "../../common/engine/graphics/Renderer.js";
+import { Renderer } from "../../../common/engine/graphics/Renderer.js";
 
-import { GLTFLoader } from "../../common/engine/gltf-loader/GLTFLoader.js";
-import { mat4, quat, vec3 } from "../../lib/gl-matrix-module.js";
+import { GLTFLoader } from "../../../common/engine/gltf-loader/GLTFLoader.js";
+import { mat4, quat, vec3 } from "../../../lib/gl-matrix-module.js";
 
 import { Light } from "../../common/gltf-loader/gltf-components/Light.js";
 
-import { HUDSelect } from "../menus/HUDs/HUDSelect.js";
+import { HUDSelect } from "../../menus/HUDs/HUDSelect.js";
 
 // Define constants used in this class - used to avoid "magic numbers"
 const bottomRotateVector = [0, 1, 0]; // Used to rotate tank around itself

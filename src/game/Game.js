@@ -5,17 +5,6 @@ import { SelectGameComponent } from "../game-states/SelectGameComponent.js";
 import { MainGameComponent } from "../game-states/MainGameComponent.js";
 import { EndGameComponent } from "../game-states/EndGameComponent.js";
 
-// Define constants used in this class - used to avoid "magic numbers"
-const gameStates = {
-    SelectScreen: 0,
-    MainScreen: 1,
-    EndScreen: 2,
-};
-
-const endGameFlag = -1;
-
-const msFactor = 0.001;
-
 export class Game {
     constructor(canvas, glOptions) {
         // Bind "this" to _update method
@@ -251,3 +240,18 @@ export class Game {
         }
     }
 }
+
+// Define constants used in this class - used to avoid "magic numbers"
+const gameStates = {
+    SelectScreen: 0,
+    MainScreen: 1,
+    EndScreen: 2,
+};
+
+const gameConstants = {
+    endGameFlag: -1,
+    msFactor: 0.001,
+};
+
+Object.freeze(gameStates);
+Object.freeze(gameConstants);

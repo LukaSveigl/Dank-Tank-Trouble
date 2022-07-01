@@ -1,5 +1,5 @@
-import { Map } from "../../components/map/Map";
-import { Loader } from "./Loader";
+import { Map } from "../../components/map/Map.js";
+import { Loader } from "./Loader.js";
 
 /**
  * @class MapLoader - loads properties of maps from JSON files.
@@ -15,7 +15,7 @@ export class MapLoader extends Loader {
 
     /**
      * Creates a Map object from the JSON object of the given name.
-     * @param {string} name - the name of the map.
+     * @param {String} name - the name of the map.
      * @returns a new Map object created from the JSON of map with the given name.
      */
     getMap(name) {
