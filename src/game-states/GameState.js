@@ -26,6 +26,8 @@ export class GameState {
         };
         Object.freeze(this.exitCodes);
 
+        this.exitCode = this.exitCodes.normalOperation;
+
         // This is needed to ensure that children of this class implement all 
         // of the defined methods.
         const proto = Object.getPrototypeOf(this);

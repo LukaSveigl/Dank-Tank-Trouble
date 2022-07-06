@@ -37,9 +37,9 @@
         },
         {
             "mesh" : 1,
-            "name" : "A",
+            "name" : "B",
             "translation" : [
-                -1.2451120615005493,
+                -0.9937406778335571,
                 0,
                 0
             ]
@@ -68,10 +68,21 @@
     "materials" : [
         {
             "doubleSided" : true,
-            "name" : "red",
+            "name" : "Material",
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
                     "index" : 0
+                },
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.5
+            }
+        },
+        {
+            "doubleSided" : true,
+            "name" : "blue",
+            "pbrMetallicRoughness" : {
+                "baseColorTexture" : {
+                    "index" : 1
                 },
                 "metallicFactor" : 0,
                 "roughnessFactor" : 0.5
@@ -88,12 +99,13 @@
                         "NORMAL" : 1,
                         "TEXCOORD_0" : 2
                     },
-                    "indices" : 3
+                    "indices" : 3,
+                    "material" : 0
                 }
             ]
         },
         {
-            "name" : "Text",
+            "name" : "Text.001",
             "primitives" : [
                 {
                     "attributes" : {
@@ -102,7 +114,7 @@
                         "TEXCOORD_0" : 6
                     },
                     "indices" : 7,
-                    "material" : 0
+                    "material" : 1
                 }
             ]
         }
@@ -111,13 +123,22 @@
         {
             "sampler" : 0,
             "source" : 0
+        },
+        {
+            "sampler" : 0,
+            "source" : 1
         }
     ],
     "images" : [
         {
             "mimeType" : "image/jpeg",
-            "name" : "red",
-            "uri" : "red.jpg"
+            "name" : "Black",
+            "uri" : "Black.jpg"
+        },
+        {
+            "mimeType" : "image/jpeg",
+            "name" : "blue",
+            "uri" : "blue.jpg"
         }
     ],
     "accessors" : [
@@ -158,15 +179,15 @@
         {
             "bufferView" : 4,
             "componentType" : 5126,
-            "count" : 110,
+            "count" : 1049,
             "max" : [
-                2.425658941268921,
-                2.494755744934082,
-                0.43640050292015076
+                1.9859039783477783,
+                2.4942660331726074,
+                0.4754466712474823
             ],
             "min" : [
-                0,
-                -1.9075665491641303e-08,
+                0.2742961049079895,
+                -2.078242999914437e-08,
                 0
             ],
             "type" : "VEC3"
@@ -174,19 +195,19 @@
         {
             "bufferView" : 5,
             "componentType" : 5126,
-            "count" : 110,
+            "count" : 1049,
             "type" : "VEC3"
         },
         {
             "bufferView" : 6,
             "componentType" : 5126,
-            "count" : 110,
+            "count" : 1049,
             "type" : "VEC2"
         },
         {
             "bufferView" : 7,
             "componentType" : 5123,
-            "count" : 132,
+            "count" : 1284,
             "type" : "SCALAR"
         }
     ],
@@ -213,23 +234,23 @@
         },
         {
             "buffer" : 0,
-            "byteLength" : 1320,
+            "byteLength" : 12588,
             "byteOffset" : 140
         },
         {
             "buffer" : 0,
-            "byteLength" : 1320,
-            "byteOffset" : 1460
+            "byteLength" : 12588,
+            "byteOffset" : 12728
         },
         {
             "buffer" : 0,
-            "byteLength" : 880,
-            "byteOffset" : 2780
+            "byteLength" : 8392,
+            "byteOffset" : 25316
         },
         {
             "buffer" : 0,
-            "byteLength" : 264,
-            "byteOffset" : 3660
+            "byteLength" : 2568,
+            "byteOffset" : 33708
         }
     ],
     "samplers" : [
@@ -240,7 +261,7 @@
     ],
     "buffers" : [
         {
-            "byteLength" : 3924,
+            "byteLength" : 36276,
             "uri" : "B_map.bin"
         }
     ]

@@ -79,7 +79,10 @@ export class RunningGameState extends GameState {
         RunningGameState.count = (RunningGameState.count - 1 < runningConstants.minInstances)
             ? runningConstants.minInstances : RunningGameState.count - 1;
 
-        this.gl = null;
+        if (this.gl) {
+            this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+            this.gl = null;
+        }
 
         this.scene = null;
         this.camera = null;
@@ -101,5 +104,4 @@ const runningConstants = {
     minInstances: 0,
     maxInstances: 1,
 };
-
 Object.freeze(runningConstants);

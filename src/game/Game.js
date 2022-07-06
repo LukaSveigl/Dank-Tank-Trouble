@@ -1,6 +1,8 @@
 import { MenuManager } from "../managers/MenuManager.js";
 import { SoundManager } from "../managers/SoundManager.js";
 
+import { GameStateManager } from "../managers/GameStateManager.js";
+
 //import { SelectGameComponent } from "../game-states/SelectGameComponent.js";
 //import { MainGameComponent } from "../game-states/MainGameComponent.js";
 //import { EndGameComponent } from "../game-states/EndGameComponent.js";
@@ -22,6 +24,9 @@ export class Game {
         // and which tank will be player tank when game starts.
         // Set in constructor for the same reason as gameState
         this.currTank = 0;
+
+
+        this.gameStateManager = null;
 
         // Initialize WebGL with glOptions
         this._initGL(glOptions);
@@ -83,7 +88,7 @@ export class Game {
         // initialization code (including event handler binding)
 
         // Create new music manager, used to load background music, controlling volume etc.
-        this.soundManager = new SoundManager();
+        /*this.soundManager = new SoundManager();
 
         // Create new instance of select screen component
         // It is used to update and display objects during the select
@@ -112,11 +117,14 @@ export class Game {
         this.mainGameComponent.setMenuManager(this.menuManager);
         this.mainGameComponent.setSoundManager(this.soundManager);
 
-        this.endGameComponent.setSoundManager(this.soundManager);
+        this.endGameComponent.setSoundManager(this.soundManager);*/
 
         // Start time counter
         this.time = Date.now();
         this.startTime = this.time;
+
+        this.gameStateManager = new GameStateManager();
+        await this.gameStateManager.init(this.gl);
 
         // Call resize code to update camera's properties
         this.resize();
@@ -125,7 +133,12 @@ export class Game {
     update() {
         // update code (input, animations, AI ...)
 
-        switch (this.gameState) {
+        const dt = (this.time - this.startTime) * 0.001;
+        this.startTime = this.time;
+
+        this.gameStateManager.update(dt);
+
+        /*switch (this.gameState) {
             case gameStates.SelectScreen:
                 this.selectGameComponent.update();
                 break;
@@ -146,13 +159,15 @@ export class Game {
             default:
                 console.log("Invalid game state - switching to main menu!");
                 this.gameState = 0;
-        }
+        }*/
     }
 
     render() {
         // render code (gl API calls)
 
-        switch (this.gameState) {
+        this.gameStateManager.render();
+
+        /*switch (this.gameState) {
             case gameStates.SelectScreen:
                 this.selectGameComponent.render();
                 break;
@@ -165,7 +180,7 @@ export class Game {
             default:
                 console.log("Invalid game state - switching to main menu!");
                 this.gameState = 0;
-        }
+        }*/
     }
 
     resize() {

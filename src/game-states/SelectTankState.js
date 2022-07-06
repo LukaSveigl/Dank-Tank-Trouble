@@ -79,7 +79,10 @@ export class SelectTankState extends GameState {
         SelectTankState.count = (SelectTankState.count - 1 < selectTankConstants.minInstances)
             ? selectTankConstants.minInstances : SelectTankState.count - 1;
 
-        this.gl = null;
+        if (this.gl) {
+            this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+            this.gl = null;
+        }
 
         this.scene = null;
         this.camera = null;
@@ -101,5 +104,4 @@ const selectTankConstants = {
     minInstances: 0,
     maxInstances: 1,
 };
-
 Object.freeze(selectTankConstants);

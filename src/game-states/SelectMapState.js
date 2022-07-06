@@ -23,6 +23,8 @@ export class SelectMapState extends GameState {
 
         this.dataLoader = null;
 
+        this.currentMapIndex = 0;
+
         SelectMapState.count++;
         if (SelectMapState.count > selectMapConstants.maxInstances) {
             SelectMapState.count--;
@@ -34,10 +36,9 @@ export class SelectMapState extends GameState {
      * Initializes the state after it has been created.
      */
     async init() {
-        //this.dataLoader = new DataLoader(selectMapConstants.previewsPath, null);
-        this.dataLoader = new DataLoader("/data/maps/map-previews.json", null);
+        this.dataLoader = new DataLoader(selectMapConstants.previewsPath, null);
         this.gltfLoader = new GLTFLoader();
-        //this.renderer = new Renderer(this.gl);
+        this.renderer = new Renderer(this.gl);
 
         await this.dataLoader.load();
         this.maps = this.dataLoader.loadAllMaps();
@@ -46,21 +47,9 @@ export class SelectMapState extends GameState {
             throw new Error("No map previews found!");
         }
 
-        await this.gltfLoader.load("/" + this.maps[0].url);
-        this.scene = await this.gltfLoader.loadScene(this.gltfLoader.defaultScene);
-        this.camera = await this.gltfLoader.loadNode("Camera");
-        let lightPosition = await this.gltfLoader.loadNode("Light");
-        this._setLight(lightPosition);
+        await this._setupCurrentMap();
 
-        if (!this.scene || !this.camera || !this.light) {
-            throw new Error("Scene, Camera or Light not present in glTF!");
-        }
-        if (!this.camera.camera) {
-            throw new Error("Camera node does not contain a camera reference!");
-        }
-
-        //this.renderer.prepareScene(this.scene);
-
+        this.keydownHandler = this.keydownHandler.bind(this);
         document.addEventListener("keydown", this.keydownHandler);
     }
 
@@ -70,17 +59,17 @@ export class SelectMapState extends GameState {
      * @returns the exit code, which is needed to signal the end of the state.
      */
     update(dt) {
-
+        return this.exitCode;
     }
 
     /**
      * Renders the game state scene.
      */
     render() {
-        // If renderer, camera and light objects exits, render the current scene - this check is needed 
+        // If renderer, camera and light objects exist, render the current scene - this check is needed 
         // due to the asynchronous nature of the init method.
         if (this.renderer && this.camera && this.light) {
-            //    this.renderer.render(this.scene, this.camera, this.light);
+            this.renderer.render(this.scene, this.camera, this.light);
         }
     }
 
@@ -89,7 +78,8 @@ export class SelectMapState extends GameState {
      * @param {Object} items - items to be loaded from the previous game state. 
      */
     async load(items) {
-
+        // As this state is the first state, it doesn't load anything. This method must
+        // exist because this class extends the GameState interface which defines it.
     }
 
     /**
@@ -97,7 +87,11 @@ export class SelectMapState extends GameState {
      * @returns the object of items to be loaded in the next state. 
      */
     unload() {
-
+        return {
+            // The 'previews/' part must be removed from the path so that the url points at
+            // the actual map, not the preview.
+            selectedMapUrl: this.maps[this.currentMapIndex].url.replace("previews/", ""),
+        };
     }
 
     /**
@@ -107,7 +101,11 @@ export class SelectMapState extends GameState {
         SelectMapState.count = (SelectMapState.count - 1 < selectMapConstants.minInstances)
             ? selectMapConstants.minInstances : SelectMapState.count - 1;
 
-        this.gl = null;
+
+        if (this.gl) {
+            this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+            this.gl = null;
+        }
 
         this.scene = null;
         this.camera = null;
@@ -124,23 +122,48 @@ export class SelectMapState extends GameState {
      * The handler for a keydown event, which is used to swap between maps.
      * @param {Event} e - the event that occurs on keydown.
      */
-    keydownHandler(e) {
+    async keydownHandler(e) {
+        //TODO: ADD THROTTLING
         if (e.code === "KeyA") {
             // move to previous map
-            this._moveToNextMap(false);
+            await this._moveToNextMap(false);
         }
         else if (e.code === "KeyD") {
             // move to next map
-            this._moveToNextMap(true);
+            await this._moveToNextMap(true);
         }
         else if (e.code === "Enter") {
             // confirm map selection
+            this.exitCode = this.exitCodes.stateFinished;
         }
         else if (e.code === "Escape") {
             // move back to start screen
             setTimeout(function () { document.location = "/index.html"; }, 500);
             return false;
         }
+    }
+
+    // PRIVATE METHODS
+
+    /**
+     * Sets up the map pointed to by the currentMapIndex.
+     * @private
+     */
+    async _setupCurrentMap() {
+        await this.gltfLoader.load("/" + this.maps[this.currentMapIndex].url);
+        this.scene = await this.gltfLoader.loadScene(this.gltfLoader.defaultScene);
+        this.camera = await this.gltfLoader.loadNode("Camera");
+        let lightPosition = await this.gltfLoader.loadNode("Light");
+        this._setLight(lightPosition);
+
+        if (!this.scene || !this.camera || !this.light) {
+            throw new Error("Scene, Camera or Light not present in glTF!");
+        }
+        if (!this.camera.camera) {
+            throw new Error("Camera node does not contain a camera reference!");
+        }
+
+        this.renderer.prepareScene(this.scene);
     }
 
     /**
@@ -166,8 +189,20 @@ export class SelectMapState extends GameState {
      * @param {Boolean} next - flag that signifies if we're moving to the next or previous map. 
      * @private
      */
-    _moveToNextMap(next) {
+    async _moveToNextMap(next) {
+        if (next) {
+            this.currentMapIndex = (this.currentMapIndex + 1 > this.maps.length - 1) ?
+                0 : this.currentMapIndex + 1;
+        }
+        else {
+            this.currentMapIndex = (this.currentMapIndex - 1 < 0) ?
+                this.maps.length - 1 : this.currentMapIndex - 1;
+        }
 
+        // This is needed so the map isn't moved too fast, which breaks the game.
+        await new Promise(handler => setTimeout(handler, 250));
+
+        await this._setupCurrentMap();
     }
 
 }
@@ -180,7 +215,6 @@ SelectMapState.count = 0;
 const selectMapConstants = {
     minInstances: 0,
     maxInstances: 1,
-    previewsPath: "../../data/maps/map-previews.json",
+    previewsPath: "/data/maps/map-previews.json",
 };
-
 Object.freeze(selectMapConstants);

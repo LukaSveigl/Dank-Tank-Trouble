@@ -47,18 +47,23 @@ export class GameStateManager {
      * @param {Number} dt - delta time. The time difference since the last update.
      */
     update(dt) {
+        let exitCode = -1;
         switch (this.currentState) {
             case this.stateEnum.selectMap:
-                this.states.selectMap.update(dt);
+                exitCode = this.states.selectMap.update(dt);
                 break;
             case this.stateEnum.selectTank:
-                this.states.selectTank.update(dt);
+                exitCode = this.states.selectTank.update(dt);
                 break;
             case this.stateEnum.runningGame:
-                this.states.runningGame.update(dt);
+                exitCode = this.states.runningGame.update(dt);
                 break;
             default:
                 throw new Error("Invalid game state!");
+        }
+
+        if (exitCode === 1) {
+            this.swapState();
         }
     }
 
@@ -104,6 +109,8 @@ export class GameStateManager {
             default:
                 break;
         }
+
+        console.log("State swapped, current state: " + this.currentState);
     }
 
     /**

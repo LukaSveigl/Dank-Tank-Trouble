@@ -2,7 +2,7 @@
  * The application's entry point.
  */
 
-//import { Game } from "./game/Game.js";
+import { Game } from "./game/Game.js";
 import { DataLoader } from "../common/engine/data-loader/DataLoader.js";
 import { SelectMapState } from "./game-states/SelectMapState.js";
 import { SelectTankState } from "./game-states/SelectTankState.js";
@@ -138,7 +138,8 @@ async function tests() {
 
     // Test 3.1: Check if basic initialization works properly.
     {
-        // Test 3.1.1: Check if creation of SelectMapState works.
+        // Test 3.1.1: Check if creation of SelectMapState works. This test is pointless as the gameStateManager
+        // needs a WebGL object to function.
         let errorFound = false;
         let gsm = null;
         try {
@@ -187,18 +188,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     console.log("loaded");
 
-    document.addEventListener("keydown", (e) => {
+    /*document.addEventListener("keydown", (e) => {
         if (e.code === "Escape") {
             setTimeout(function () { document.location = "/index.html"; }, 500);
         }
         return false;
-    });
+    });*/
 
     // Uncomment to run the game.
-    /*
+
     const canvas = document.querySelector("canvas");
     game = new Game(canvas);
-    */
+
     return false;
 });
 
