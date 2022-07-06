@@ -155,7 +155,7 @@ async function tests() {
         }
 
         // Test 3.1.2: Check if initialization of maps works.
-        if (gsm) {
+        if (gsm && gsm.states.selectMap) {
             if (gsm.states.selectMap.maps && gsm.states.selectMap.maps.length != 0) {
                 console.log('%c Maps loaded correctly in SelectMapState.', 'color: green');
             }

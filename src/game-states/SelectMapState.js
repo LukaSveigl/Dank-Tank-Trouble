@@ -25,6 +25,12 @@ export class SelectMapState extends GameState {
 
         this.currentMapIndex = 0;
 
+        this.timeValues = {
+            time: Date.now(),
+            startTime: Date.now(),
+            deltaTime: 0,
+        };
+
         SelectMapState.count++;
         if (SelectMapState.count > selectMapConstants.maxInstances) {
             SelectMapState.count--;
@@ -101,7 +107,6 @@ export class SelectMapState extends GameState {
         SelectMapState.count = (SelectMapState.count - 1 < selectMapConstants.minInstances)
             ? selectMapConstants.minInstances : SelectMapState.count - 1;
 
-
         if (this.gl) {
             this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
             this.gl = null;
@@ -123,24 +128,32 @@ export class SelectMapState extends GameState {
      * @param {Event} e - the event that occurs on keydown.
      */
     async keydownHandler(e) {
-        //TODO: ADD THROTTLING
+        this.timeValues.time = Date.now();
+        this.timeValues.deltaTime = (this.timeValues.time - this.timeValues.startTime) * selectMapConstants.millisecondsFactor;
+
         if (e.code === "KeyA") {
-            // move to previous map
-            await this._moveToNextMap(false);
+            // Move to previous map.
+            if (this.timeValues.deltaTime < selectMapConstants.throttleBound) {
+                await this._moveToNextMap(false);
+            }
         }
         else if (e.code === "KeyD") {
-            // move to next map
-            await this._moveToNextMap(true);
+            // Move to next map.
+            if (this.timeValues.deltaTime < selectMapConstants.throttleBound) {
+                await this._moveToNextMap(true);
+            }
         }
         else if (e.code === "Enter") {
-            // confirm map selection
+            // Confirm map selection.
             this.exitCode = this.exitCodes.stateFinished;
         }
         else if (e.code === "Escape") {
-            // move back to start screen
+            // Move back to start screen.
             setTimeout(function () { document.location = "/index.html"; }, 500);
             return false;
         }
+
+        this.timeValues.startTime = this.timeValues.time;
     }
 
     // PRIVATE METHODS
@@ -199,9 +212,6 @@ export class SelectMapState extends GameState {
                 this.maps.length - 1 : this.currentMapIndex - 1;
         }
 
-        // This is needed so the map isn't moved too fast, which breaks the game.
-        await new Promise(handler => setTimeout(handler, 250));
-
         await this._setupCurrentMap();
     }
 
@@ -216,5 +226,7 @@ const selectMapConstants = {
     minInstances: 0,
     maxInstances: 1,
     previewsPath: "/data/maps/map-previews.json",
+    millisecondsFactor: 0.001,
+    throttleBound: 2,
 };
 Object.freeze(selectMapConstants);
