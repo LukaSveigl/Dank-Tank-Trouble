@@ -131,26 +131,27 @@ export class SelectMapState extends GameState {
         this.timeValues.time = Date.now();
         this.timeValues.deltaTime = (this.timeValues.time - this.timeValues.startTime) * selectMapConstants.millisecondsFactor;
 
-        if (e.code === "KeyA") {
-            // Move to previous map.
-            if (this.timeValues.deltaTime < selectMapConstants.throttleBound) {
-                await this._moveToNextMap(false);
-            }
-        }
-        else if (e.code === "KeyD") {
-            // Move to next map.
-            if (this.timeValues.deltaTime < selectMapConstants.throttleBound) {
-                await this._moveToNextMap(true);
-            }
-        }
-        else if (e.code === "Enter") {
-            // Confirm map selection.
-            this.exitCode = this.exitCodes.stateFinished;
-        }
-        else if (e.code === "Escape") {
-            // Move back to start screen.
-            setTimeout(function () { document.location = "/index.html"; }, 500);
-            return false;
+        switch (e.code) {
+            case "KeyA":
+                // Move to previous map.
+                if (this.timeValues.deltaTime < selectMapConstants.throttleBound) {
+                    await this._moveToNextMap(false);
+                }
+                break;
+            case "KeyD":
+                // Move to next map.
+                if (this.timeValues.deltaTime < selectMapConstants.throttleBound) {
+                    await this._moveToNextMap(true);
+                }
+                break;
+            case "Enter":
+                // Confirm map selection.
+                this.exitCode = this.exitCodes.stateFinished;
+                break;
+            case "Escape":
+                // Move back to start screen.
+                setTimeout(function () { document.location = "/index.html"; }, 500);
+                return false;
         }
 
         this.timeValues.startTime = this.timeValues.time;
