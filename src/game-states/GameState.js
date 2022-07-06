@@ -20,6 +20,12 @@ export class GameState {
 
         this.renderer = null;
 
+        this.exitCodes = {
+            normalOperation: 0,
+            stateFinished: 1,
+        };
+        Object.freeze(this.exitCodes);
+
         // This is needed to ensure that children of this class implement all 
         // of the defined methods.
         const proto = Object.getPrototypeOf(this);
@@ -40,6 +46,7 @@ export class GameState {
     /**
      * Updates the state of everything in the current game state.
      * @param {Number} dt - delta time. The time difference since the last update.
+     * @returns the exit code, which is needed to signal the end of the state.
      */
     update(dt) {
 

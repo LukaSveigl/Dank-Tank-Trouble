@@ -17,6 +17,7 @@ export class SelectTankState extends GameState {
 
         SelectTankState.count++;
         if (SelectTankState.count > selectTankConstants.maxInstances) {
+            SelectTankState.count--;
             throw new Error("Only one instance of SelectTankState can be active at a time!");
         }
     }
@@ -31,6 +32,7 @@ export class SelectTankState extends GameState {
     /**
      * Updates the state of everything in the current game state.
      * @param {Number} dt - delta time. The time difference since the last update.
+     * @returns the exit code, which is needed to signal the end of the state.
      */
     update(dt) {
 

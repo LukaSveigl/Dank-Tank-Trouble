@@ -29,4 +29,18 @@ export class MapLoader extends Loader {
         return map;
     }
 
+    /**
+     * Returns a list of all Map objects in the game.
+     * @returns a list of all Map objects.
+     */
+    getAllMaps() {
+        let items = new Array();
+        for (let item in this.json) {
+            if (item[0] !== "_") {
+                items.push(new Map(item, this.json[item]));
+            }
+        }
+        return items;
+    }
+
 }

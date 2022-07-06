@@ -41,7 +41,7 @@ export class Utils {
 
     static calculateLookAt(objectFrom, objectTo) {
         // Generate targetTo matrix (a matrix that makes one object point to another), based on
-        // positions two objects
+        // positions of two objects
         const mat = mat4.targetTo(mat4.create(), objectFrom, objectTo, [0, 1, 0]);
 
         // Extract rotation and adjust so object is pointing in correct direction

@@ -17,6 +17,7 @@ export class RunningGameState extends GameState {
 
         RunningGameState.count++;
         if (RunningGameState.count > runningConstants.maxInstances) {
+            RunningGameState.count--;
             throw new Error("Only one instance of RunningGameState can be active at a time!");
         }
     }
@@ -31,6 +32,7 @@ export class RunningGameState extends GameState {
     /**
      * Updates the state of everything in the current game state.
      * @param {Number} dt - delta time. The time difference since the last update.
+     * @returns the exit code, which is needed to signal the end of the state.
      */
     update(dt) {
 

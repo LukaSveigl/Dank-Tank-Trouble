@@ -33,27 +33,11 @@
         },
         {
             "mesh" : 0,
-            "name" : "Plane",
-            "scale" : [
-                8.98257064819336,
-                8.98257064819336,
-                8.98257064819336
-            ]
+            "name" : "Plane"
         },
         {
             "mesh" : 1,
             "name" : "A",
-            "rotation" : [
-                0.7071068286895752,
-                0,
-                0,
-                0.7071068286895752
-            ],
-            "scale" : [
-                3.636669874191284,
-                3.636669874191284,
-                3.636669874191284
-            ],
             "translation" : [
                 -1.2451120615005493,
                 0,
@@ -61,7 +45,7 @@
             ]
         },
         {
-            "name" : "light",
+            "name" : "Light",
             "translation" : [
                 -4.806552886962891,
                 6.639486312866211,
@@ -131,9 +115,9 @@
     ],
     "images" : [
         {
-            "mimeType" : "image/png",
+            "mimeType" : "image/jpeg",
             "name" : "red",
-            "uri" : "red.png"
+            "uri" : "red.jpg"
         }
     ],
     "accessors" : [
@@ -142,14 +126,14 @@
             "componentType" : 5126,
             "count" : 4,
             "max" : [
-                1,
+                8.98257064819336,
                 0,
-                1
+                8.98257064819336
             ],
             "min" : [
-                -1,
+                -8.98257064819336,
                 0,
-                -1
+                -8.98257064819336
             ],
             "type" : "VEC3"
         },
@@ -174,29 +158,29 @@
         {
             "bufferView" : 4,
             "componentType" : 5126,
-            "count" : 89,
+            "count" : 110,
             "max" : [
-                0.6670000553131104,
-                0.11999999731779099,
-                0
+                2.425658941268921,
+                2.494755744934082,
+                0.43640050292015076
             ],
             "min" : [
                 0,
-                0,
-                -0.6860000491142273
+                -1.9075665491641303e-08,
+                0
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 5,
             "componentType" : 5126,
-            "count" : 89,
+            "count" : 110,
             "type" : "VEC3"
         },
         {
             "bufferView" : 6,
             "componentType" : 5126,
-            "count" : 89,
+            "count" : 110,
             "type" : "VEC2"
         },
         {
@@ -229,23 +213,23 @@
         },
         {
             "buffer" : 0,
-            "byteLength" : 1068,
+            "byteLength" : 1320,
             "byteOffset" : 140
         },
         {
             "buffer" : 0,
-            "byteLength" : 1068,
-            "byteOffset" : 1208
+            "byteLength" : 1320,
+            "byteOffset" : 1460
         },
         {
             "buffer" : 0,
-            "byteLength" : 712,
-            "byteOffset" : 2276
+            "byteLength" : 880,
+            "byteOffset" : 2780
         },
         {
             "buffer" : 0,
             "byteLength" : 264,
-            "byteOffset" : 2988
+            "byteOffset" : 3660
         }
     ],
     "samplers" : [
@@ -256,8 +240,8 @@
     ],
     "buffers" : [
         {
-            "byteLength" : 3252,
-            "uri" : "a map.bin"
+            "byteLength" : 3924,
+            "uri" : "B_map.bin"
         }
     ]
 }

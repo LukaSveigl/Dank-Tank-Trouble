@@ -33,35 +33,19 @@
         },
         {
             "mesh" : 0,
-            "name" : "Plane",
-            "scale" : [
-                8.98257064819336,
-                8.98257064819336,
-                8.98257064819336
-            ]
+            "name" : "Plane"
         },
         {
             "mesh" : 1,
-            "name" : "B",
-            "rotation" : [
-                0.7071068286895752,
-                0,
-                0,
-                0.7071068286895752
-            ],
-            "scale" : [
-                3.6572813987731934,
-                3.6572813987731934,
-                3.6572813987731934
-            ],
+            "name" : "A",
             "translation" : [
-                -0.9937406778335571,
+                -1.2451120615005493,
                 0,
                 0
             ]
         },
         {
-            "name" : "light",
+            "name" : "Light",
             "translation" : [
                 -4.806552886962891,
                 6.639486312866211,
@@ -84,7 +68,7 @@
     "materials" : [
         {
             "doubleSided" : true,
-            "name" : "blue",
+            "name" : "red",
             "pbrMetallicRoughness" : {
                 "baseColorTexture" : {
                     "index" : 0
@@ -109,7 +93,7 @@
             ]
         },
         {
-            "name" : "Text.001",
+            "name" : "Text",
             "primitives" : [
                 {
                     "attributes" : {
@@ -131,9 +115,9 @@
     ],
     "images" : [
         {
-            "mimeType" : "image/png",
-            "name" : "blue",
-            "uri" : "blue.png"
+            "mimeType" : "image/jpeg",
+            "name" : "red",
+            "uri" : "red.jpg"
         }
     ],
     "accessors" : [
@@ -142,14 +126,14 @@
             "componentType" : 5126,
             "count" : 4,
             "max" : [
-                1,
+                8.98257064819336,
                 0,
-                1
+                8.98257064819336
             ],
             "min" : [
-                -1,
+                -8.98257064819336,
                 0,
-                -1
+                -8.98257064819336
             ],
             "type" : "VEC3"
         },
@@ -174,35 +158,35 @@
         {
             "bufferView" : 4,
             "componentType" : 5126,
-            "count" : 836,
+            "count" : 110,
             "max" : [
-                0.5430000424385071,
-                0.12999999523162842,
-                0
+                2.425658941268921,
+                2.494755744934082,
+                0.43640050292015076
             ],
             "min" : [
-                0.07500000298023224,
                 0,
-                -0.6820000410079956
+                -1.9075665491641303e-08,
+                0
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 5,
             "componentType" : 5126,
-            "count" : 836,
+            "count" : 110,
             "type" : "VEC3"
         },
         {
             "bufferView" : 6,
             "componentType" : 5126,
-            "count" : 836,
+            "count" : 110,
             "type" : "VEC2"
         },
         {
             "bufferView" : 7,
             "componentType" : 5123,
-            "count" : 1284,
+            "count" : 132,
             "type" : "SCALAR"
         }
     ],
@@ -229,23 +213,23 @@
         },
         {
             "buffer" : 0,
-            "byteLength" : 10032,
+            "byteLength" : 1320,
             "byteOffset" : 140
         },
         {
             "buffer" : 0,
-            "byteLength" : 10032,
-            "byteOffset" : 10172
+            "byteLength" : 1320,
+            "byteOffset" : 1460
         },
         {
             "buffer" : 0,
-            "byteLength" : 6688,
-            "byteOffset" : 20204
+            "byteLength" : 880,
+            "byteOffset" : 2780
         },
         {
             "buffer" : 0,
-            "byteLength" : 2568,
-            "byteOffset" : 26892
+            "byteLength" : 264,
+            "byteOffset" : 3660
         }
     ],
     "samplers" : [
@@ -256,8 +240,8 @@
     ],
     "buffers" : [
         {
-            "byteLength" : 29460,
-            "uri" : "b map.bin"
+            "byteLength" : 3924,
+            "uri" : "A_map.bin"
         }
     ]
 }

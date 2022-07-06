@@ -27,8 +27,12 @@ export class DataLoader {
      * Asynchronously loads the JSON files to their respective loaders. 
      */
     async load() {
-        await this.mapLoader.load(this.mapUrl);
-        await this.tankLoader.load(this.tankUrl);
+        if (this.mapUrl !== null) {
+            await this.mapLoader.load(this.mapUrl);
+        }
+        if (this.tankUrl !== null) {
+            await this.tankLoader.load(this.tankUrl);
+        }
     }
 
     /**
@@ -47,6 +51,22 @@ export class DataLoader {
      */
     loadTank(name) {
         return this.tankLoader.getTank(name);
+    }
+
+    /**
+     * Returns a list of all Map objects.
+     * @returns a list of all Map objects.
+     */
+    loadAllMaps() {
+        return this.mapLoader.getAllMaps();
+    }
+
+    /**
+     * Returns a list of all Tank objects.
+     * @returns a list of all Tank objects.
+     */
+    loadAllTanks() {
+        return this.tankLoader.getAllTanks();
     }
 
 }

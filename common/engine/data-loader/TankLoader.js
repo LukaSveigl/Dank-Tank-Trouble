@@ -1,4 +1,4 @@
-import { Tank } from "../../components/tanks/Tank.js";
+import { Tank } from "../../components/tank/Tank.js";
 import { Loader } from "./Loader.js";
 
 /**
@@ -27,6 +27,20 @@ export class TankLoader extends Loader {
         this.cache.set(name, tank);
 
         return tank;
+    }
+
+    /**
+     * Returns a list of all Tank objects in the game.
+     * @returns a list of all Tank objects.
+     */
+    getAllTanks() {
+        let items = new Array();
+        for (let item in this.json) {
+            if (item[0] !== "_") {
+                items.push(new Tank(item, this.json[item]));
+            }
+        }
+        return items;
     }
 
 }
