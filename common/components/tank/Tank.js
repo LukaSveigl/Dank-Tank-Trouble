@@ -25,6 +25,11 @@ export class Tank {
             bottom: null,
         };
 
+        this.modelNames = {
+            topName: options.topName,
+            botName: options.botName,
+        };
+
         this.properties = {
             maxHealth: options.maxHealth === undefined ? tankConstants.defaultHealth : options.maxHealth,
             velocity: options.velocity === undefined ? tankConstants.defaultVelocity : options.velocity,

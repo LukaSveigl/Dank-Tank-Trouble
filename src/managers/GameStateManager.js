@@ -109,8 +109,6 @@ export class GameStateManager {
             default:
                 break;
         }
-
-        console.log("State swapped, current state: " + this.currentState);
     }
 
     /**
