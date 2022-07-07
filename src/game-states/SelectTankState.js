@@ -1,7 +1,13 @@
 import { GameState } from "./GameState.js";
 
-//import { Renderer } from "../../common/engine/graphics/Renderer.js"
-//import { GLTFLoader } from "../../common/engine/gltf-loader/GLTFLoader.js"
+import { DataLoader } from "../../common/engine/data-loader/DataLoader.js";
+
+import { Renderer } from "../../common/engine/graphics/Renderer.js"
+import { GLTFLoader } from "../../common/engine/gltf-loader/GLTFLoader.js"
+
+import { Light } from "../../common/engine/gltf-loader/gltf-components/Light.js";
+
+import { vec3, mat4, quat } from "../../lib/gl-matrix-module.js";
 
 /**
  * @class SelectTankState - game state that implements the selection of the player tank.
@@ -30,6 +36,8 @@ export class SelectTankState extends GameState {
             deltaTime: 0,
         };
 
+        this.alreadyRendered = false;
+
         SelectTankState.count++;
         if (SelectTankState.count > selectTankConstants.maxInstances) {
             SelectTankState.count--;
@@ -49,7 +57,7 @@ export class SelectTankState extends GameState {
         this.tanks = this.dataLoader.loadAllTanks();
 
         if (!this.tanks || this.tanks.length == 0) {
-            throw new Error("No map previews found!");
+            throw new Error("No tank previews found!");
         }
 
         await this._setupCurrentTank();
@@ -75,6 +83,7 @@ export class SelectTankState extends GameState {
         // to the asynchronous nature of the init method.
         if (this.renderer && this.camera && this.light) {
             this.renderer.render(this.scene, this.camera, this.light);
+            this.alreadyRendered = true;
         }
     }
 
@@ -141,7 +150,13 @@ export class SelectTankState extends GameState {
                 break;
             case "Enter":
                 // Confirm map selection.
-                this.exitCode = this.exitCodes.stateFinished;
+
+                // This check is needed so the keypress of Enter from the
+                // previous state is not registered here, as it should only be allowed once the 
+                // scene has been rendered.
+                if (this.alreadyRendered) {
+                    this.exitCode = this.exitCodes.stateFinished;
+                }
                 break;
             case "Escape":
                 // Move back to start screen.
@@ -162,8 +177,8 @@ export class SelectTankState extends GameState {
         await this.gltfLoader.load("/" + this.tanks[this.currentTankIndex].url);
         this.scene = await this.gltfLoader.loadScene(this.gltfLoader.defaultScene);
         this.camera = await this.gltfLoader.loadNode("Camera");
-        let lightPosition = await this.gltfLoader.loadNode("Light");
-        this._setLight(lightPosition);
+        this._setLight(selectTankConstants.lightStartPosition);
+        this._setCamera(selectTankConstants.cameraStartPosition, selectTankConstants.cameraAngle);
 
         if (!this.scene || !this.camera) {
             throw new Error("Scene or Camera not present in glTF!");
@@ -181,16 +196,19 @@ export class SelectTankState extends GameState {
      * @private
      */
     _setLight(lightPosition) {
-        let lTranslation = vec3.create();
-        mat4.getTranslation(lTranslation, lightPosition.matrix);
-
         this.light = new Light();
-
-        this.light.position[0] = lTranslation[0];
-        this.light.position[1] = lTranslation[1];
-        this.light.position[2] = lTranslation[2];
-
         this.scene.addNode(this.light);
+        this.light.position = lightPosition;
+    }
+
+    _setCamera(cameraPosition, cameraAngle) {
+        this.camera.updateTransform();
+
+        mat4.fromTranslation(this.camera.matrix, cameraPosition);
+        this.camera.updateTransform();
+
+        quat.rotateX(this.camera.rotation, this.camera.rotation, cameraAngle);
+        this.camera.updateMatrix();
     }
 
     /**
@@ -224,5 +242,10 @@ const selectTankConstants = {
     previewsPath: "/data/tanks/tank-properties.json",
     millisecondsFactor: 0.001,
     throttleBound: 2,
+    lightStartPosition: [-53, 90, 33],
+    cameraStartPosition: [0, 4.6, 16.85],
+    cameraAngle: -0.14,
+    rotationIncrement: 0.005,
+    rotationLimit: 6.25,
 };
 Object.freeze(selectTankConstants);
