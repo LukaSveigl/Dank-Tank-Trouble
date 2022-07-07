@@ -53,6 +53,9 @@ export class SelectTankState extends GameState {
         this.gltfLoader = new GLTFLoader();
         this.renderer = new Renderer(this.gl);
 
+        await this.gltfLoader.load("../../common/assets/models/floor/floor.gltf");
+        this.floor = await this.gltfLoader.loadNode("ground");
+
         await this.dataLoader.load();
         this.tanks = this.dataLoader.loadAllTanks();
 
@@ -186,6 +189,8 @@ export class SelectTankState extends GameState {
         if (!this.camera.camera) {
             throw new Error("Camera node does not contain a camera reference!");
         }
+
+        this.scene.addNode(this.floor);
 
         this.renderer.prepareScene(this.scene);
     }
