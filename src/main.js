@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     //let tmp = new DataLoader(null, null);
 
-    console.log("loaded");
+    //console.log("loaded");
 
     /*document.addEventListener("keydown", (e) => {
         if (e.code === "Escape") {

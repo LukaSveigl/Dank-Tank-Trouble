@@ -1,5 +1,5 @@
-import { MenuManager } from "../managers/MenuManager.js";
-import { SoundManager } from "../managers/SoundManager.js";
+//import { MenuManager } from "../managers/obsolete/MenuManager.js";
+//import { SoundManager } from "../managers/obsolete/SoundManager.js";
 
 import { GameStateManager } from "../managers/GameStateManager.js";
 
@@ -136,8 +136,12 @@ export class Game {
         const dt = (this.time - this.startTime) * 0.001;
         this.startTime = this.time;
 
-        this.gameStateManager.update(dt);
+        let state = this.gameStateManager.update(dt);
 
+        // TODO: FIX THIS
+        if (state === 2) {
+            //this.enableCamera();
+        }
         /*switch (this.gameState) {
             case gameStates.SelectScreen:
                 this.selectGameComponent.update();
@@ -232,7 +236,9 @@ export class Game {
     }
 
     enableCamera() {
-        this.canvas.requestPointerLock();
+        if (document.pointerLockElement !== this.canvas) {
+            this.canvas.requestPointerLock();
+        }
     }
 
     pause() {

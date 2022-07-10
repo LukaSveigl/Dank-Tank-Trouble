@@ -65,6 +65,8 @@ export class GameStateManager {
         if (exitCode === 1) {
             this.swapState();
         }
+
+        return this.currentState;
     }
 
     /**

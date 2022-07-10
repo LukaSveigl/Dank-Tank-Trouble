@@ -1,7 +1,10 @@
 import { vec3, mat4, quat, vec4, mat3 } from "../../lib/gl-matrix-module.js";
 
 export class Utils {
-    constructor() { }
+
+    constructor() {
+
+    }
 
     static getForward(object, isCamera = false) {
         // Clone object's transformation matrix and create empty vector to hold results
@@ -58,4 +61,5 @@ export class Utils {
     static radToDeg(radians) {
         return radians * (180 / Math.PI);
     }
+
 }

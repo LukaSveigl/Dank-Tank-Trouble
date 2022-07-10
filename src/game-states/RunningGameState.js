@@ -20,6 +20,12 @@ export class RunningGameState extends GameState {
             selectedTankUrl: null,
         };
 
+        this.exitItems = {
+            allTanks: 0,
+            destroyedTanks: 0,
+            pickupsCollected: 0,
+        };
+
         RunningGameState.count++;
         if (RunningGameState.count > runningConstants.maxInstances) {
             RunningGameState.count--;
@@ -59,7 +65,9 @@ export class RunningGameState extends GameState {
      * @param {Object} items - items to be loaded from the previous game state. 
      */
     async load(items) {
-        console.log("RunningGameState items:", items);
+        if (!items.selectedMapUrl || !items.selectedTankUrl) {
+            throw new Error("Previous state hasn't unloaded the correct data.");
+        }
         this.loadedItems.selectedMapUrl = items.selectedMapUrl;
         this.loadedItems.selectedTankUrl = items.selectedTankUrl;
     }
@@ -69,7 +77,7 @@ export class RunningGameState extends GameState {
      * @returns the object of items to be loaded in the next state. 
      */
     unload() {
-
+        return this.exitItems;
     }
 
     /**
