@@ -15,7 +15,7 @@ import { vec3, mat4, quat } from "../../lib/gl-matrix-module.js";
 export class SelectTankState extends GameState {
 
     /**
-     * Constructs a new SelectMapState object.
+     * Constructs a new SelectTankState object.
      * @param {Object} gl - the WebGL object. 
      */
     constructor(gl) {
@@ -29,14 +29,14 @@ export class SelectTankState extends GameState {
         this.dataLoader = null;
 
         this.currentTankIndex = 0;
+        this.alreadyRendered = false;
+        this.currentRotation = 0.005;
 
         this.timeValues = {
             time: Date.now(),
             startTime: Date.now(),
             deltaTime: 0,
         };
-
-        this.alreadyRendered = false;
 
         SelectTankState.count++;
         if (SelectTankState.count > selectTankConstants.maxInstances) {
@@ -75,6 +75,7 @@ export class SelectTankState extends GameState {
      * @returns the exit code, which is needed to signal the end of the state.
      */
     update(dt) {
+        this._rotate();
         return this.exitCode;
     }
 
@@ -82,7 +83,7 @@ export class SelectTankState extends GameState {
      * Renders the game state scene.
      */
     render() {
-        // If renderer, camera and light objects exits, render the current scene - this is needed due
+        // If renderer, camera and light objects exist, render the current scene - this is needed due
         // to the asynchronous nature of the init method.
         if (this.renderer && this.camera && this.light) {
             this.renderer.render(this.scene, this.camera, this.light);
@@ -95,6 +96,9 @@ export class SelectTankState extends GameState {
      * @param {Object} items - items to be loaded from the previous game state. 
      */
     async load(items) {
+        if (!items.selectedMapUrl) {
+            throw new Error("Previous state hasn't unloaded the correct data.");
+        }
         this.loadedItems.selectedMapUrl = items.selectedMapUrl;
     }
 
@@ -131,7 +135,7 @@ export class SelectTankState extends GameState {
     }
 
     /**
-     * The handler for a keydown event, which is used to swap between maps.
+     * The handler for a keydown event, which is used to swap between tanks.
      * @param {Event} e - the event that occurs on keydown.
      */
     async keydownHandler(e) {
@@ -140,19 +144,19 @@ export class SelectTankState extends GameState {
 
         switch (e.code) {
             case "KeyA":
-                // Move to previous map.
+                // Move to previous tank.
                 if (this.timeValues.deltaTime < selectTankConstants.throttleBound) {
                     await this._moveToNextTank(false);
                 }
                 break;
             case "KeyD":
-                // Move to next map.
+                // Move to next tank.
                 if (this.timeValues.deltaTime < selectTankConstants.throttleBound) {
                     await this._moveToNextTank(true);
                 }
                 break;
             case "Enter":
-                // Confirm map selection.
+                // Confirm tank selection.
 
                 // This check is needed so the keypress of Enter from the
                 // previous state is not registered here, as it should only be allowed once the 
@@ -173,7 +177,7 @@ export class SelectTankState extends GameState {
     // PRIVATE METHODS
 
     /**
-     * Sets up the map pointed to by the currentMapIndex.
+     * Sets up the tank pointed to by the currentTankIndex.
      * @private
      */
     async _setupCurrentTank() {
@@ -182,6 +186,16 @@ export class SelectTankState extends GameState {
         this.camera = await this.gltfLoader.loadNode("Camera");
         this._setLight(selectTankConstants.lightStartPosition);
         this._setCamera(selectTankConstants.cameraStartPosition, selectTankConstants.cameraAngle);
+
+        if (!this.tanks[this.currentTankIndex].models.top) {
+            const tankTopName = this.tanks[this.currentTankIndex].modelNames.topName;
+            this.tanks[this.currentTankIndex].models.top = await this.gltfLoader.loadNode(tankTopName);
+        }
+        if (!this.tanks[this.currentTankIndex].models.bot) {
+            const tankBotName = this.tanks[this.currentTankIndex].modelNames.botName;
+            this.tanks[this.currentTankIndex].models.bot = await this.gltfLoader.loadNode(tankBotName);
+            this.tanks[this.currentTankIndex].models.bot.addChild(this.tanks[this.currentTankIndex].models.top);
+        }
 
         if (!this.scene || !this.camera) {
             throw new Error("Scene or Camera not present in glTF!");
@@ -206,6 +220,11 @@ export class SelectTankState extends GameState {
         this.light.position = lightPosition;
     }
 
+    /**
+     * Sets the position and viewing angle of the camera.
+     * @param {Array} cameraPosition - the camera's starting position.
+     * @param {Number} cameraAngle - the camera's viewing angle. 
+     */
     _setCamera(cameraPosition, cameraAngle) {
         this.camera.updateTransform();
 
@@ -217,8 +236,8 @@ export class SelectTankState extends GameState {
     }
 
     /**
-     * Switches the current map to the next/previous.
-     * @param {Boolean} next - flag that signifies if we're moving to the next or previous map. 
+     * Switches the current tank to the next/previous.
+     * @param {Boolean} next - flag that signifies if we're moving to the next or previous tank. 
      * @private
      */
     async _moveToNextTank(next) {
@@ -232,6 +251,29 @@ export class SelectTankState extends GameState {
         }
 
         await this._setupCurrentTank();
+    }
+
+    /**
+     * Orbits the camera around the tank.
+     * @private
+     */
+    _rotate() {
+        if (this.camera && this.tanks[this.currentTankIndex].models.bot) {
+            // The camera must be rotated upwards so the rotation around the center does not
+            // make it orbit at an angle.
+            quat.rotateX(this.camera.rotation, this.camera.rotation, -selectTankConstants.cameraAngle);
+            vec3.rotateY(
+                this.camera.translation,
+                this.camera.translation,
+                this.floor.translation,
+                0.005
+            );
+            quat.rotateY(this.camera.rotation, this.camera.rotation, 0.005);
+            // Because the camera's angle was adjusted to account for the orbit,
+            // the angle must be corrected back to the viewing angle.
+            quat.rotateX(this.camera.rotation, this.camera.rotation, selectTankConstants.cameraAngle);
+            this.camera.updateMatrix();
+        }
     }
 
 }

@@ -15,6 +15,11 @@ export class RunningGameState extends GameState {
     constructor(gl) {
         super(gl);
 
+        this.loadedItems = {
+            selectedMapUrl: null,
+            selectedTankUrl: null,
+        };
+
         RunningGameState.count++;
         if (RunningGameState.count > runningConstants.maxInstances) {
             RunningGameState.count--;
@@ -35,7 +40,7 @@ export class RunningGameState extends GameState {
      * @returns the exit code, which is needed to signal the end of the state.
      */
     update(dt) {
-
+        return this.exitCode;
     }
 
     /**
@@ -54,7 +59,9 @@ export class RunningGameState extends GameState {
      * @param {Object} items - items to be loaded from the previous game state. 
      */
     async load(items) {
-
+        console.log("RunningGameState items:", items);
+        this.loadedItems.selectedMapUrl = items.selectedMapUrl;
+        this.loadedItems.selectedTankUrl = items.selectedTankUrl;
     }
 
     /**
