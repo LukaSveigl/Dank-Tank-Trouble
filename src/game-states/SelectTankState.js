@@ -72,7 +72,7 @@ export class SelectTankState extends GameState {
     /**
      * Updates the state of everything in the current game state.
      * @param {Number} dt - delta time. The time difference since the last update.
-     * @returns the exit code, which is needed to signal the end of the state.
+     * @returns {Number} the exit code, which is needed to signal the end of the state.
      */
     update(dt) {
         this._rotate();
@@ -128,6 +128,7 @@ export class SelectTankState extends GameState {
         this.light = null;
 
         this.gltfLoader = null;
+        this.dataLoader = null;
 
         this.renderer = null;
 
@@ -167,6 +168,8 @@ export class SelectTankState extends GameState {
                 break;
             case "Escape":
                 // Move back to start screen.
+                // The function must have a timeout, otherwise the redirect fails with the
+                // NS_BINDING_ABORTED flag.
                 setTimeout(function () { document.location = "/index.html"; }, 500);
                 return false;
         }

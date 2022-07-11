@@ -1,7 +1,8 @@
 import { GameState } from "./GameState.js";
 
-//import { Renderer } from "../../common/engine/graphics/Renderer.js"
-//import { GLTFLoader } from "../../common/engine/gltf-loader/GLTFLoader.js"
+import { GLTFLoader } from "../../common/engine/gltf-loader/GLTFLoader.js";
+import { Renderer } from "../../common/engine/graphics/Renderer.js";
+import { DataLoader } from "../../common/engine/data-loader/DataLoader.js";
 
 /**
  * @class RunningGameState - the game state in which the main game is run.
@@ -14,6 +15,8 @@ export class RunningGameState extends GameState {
      */
     constructor(gl) {
         super(gl);
+
+        this.dataLoader = null;
 
         this.loadedItems = {
             selectedMapUrl: null,
@@ -37,7 +40,11 @@ export class RunningGameState extends GameState {
      * Initializes the state after it has been created.
      */
     async init() {
+        this.gltfLoader = new GLTFLoader();
+        this.renderer = new Renderer(this.gl);
 
+        this.keydownHandler = this.keydownHandler.bind(this);
+        document.addEventListener("keydown", this.keydownHandler);
     }
 
     /**
@@ -70,21 +77,16 @@ export class RunningGameState extends GameState {
         }
         this.loadedItems.selectedMapUrl = items.selectedMapUrl;
         this.loadedItems.selectedTankUrl = items.selectedTankUrl;
+        console.log(this.loadedItems);
+        await this._setupGameObjects();
     }
 
     /**
      * Unloads data to the next game state.
-     * @returns the object of items to be loaded in the next state. 
+     * @returns {Object} the object of items to be loaded in the next state. 
      */
     unload() {
         return this.exitItems;
-    }
-
-    /**
-     * Clears all the data of the current game state.
-     */
-    delete() {
-
     }
 
     /**
@@ -104,8 +106,41 @@ export class RunningGameState extends GameState {
         this.light = null;
 
         this.gltfLoader = null;
+        this.dataLoader = null;
 
         this.renderer = null;
+
+        document.removeEventListener("keydown", this.keydownHandler);
+    }
+
+    /**
+     * The handler for a keydown event, which is used to exit the game state.
+     * @param {Event} e - the event that occurs on keydown.
+     */
+    async keydownHandler(e) {
+        if (e.code === "Escape") {
+            // Move back to start screen, but prompt the user first.
+            if (confirm("Are you sure you want to leave the game?")) {
+                // The function must have a timeout, otherwise the redirect fails with the
+                // NS_BINDING_ABORTED flag.
+                setTimeout(function () { document.location = "/index.html"; }, 500);
+                return false;
+            }
+        }
+    }
+
+    // PRIVATE METHODS
+
+    /**
+     * Sets up the game objects that couldn't be initialized in the "init" method 
+     * due to lack of data.
+     * @private
+     */
+    async _setupGameObjects() {
+        this.dataLoader = new DataLoader(
+            this.loadedItems.selectedMapUrl,
+            this.loadedItems.selectedTankUrl
+        );
     }
 
 }
