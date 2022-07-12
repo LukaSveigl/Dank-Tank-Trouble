@@ -66,7 +66,6 @@ export class SelectTankState extends GameState {
         await this._setupCurrentTank();
 
         this.keydownHandler = this.keydownHandler.bind(this);
-        document.addEventListener("keydown", this.keydownHandler);
     }
 
     /**
@@ -100,6 +99,10 @@ export class SelectTankState extends GameState {
             throw new Error("Previous state hasn't unloaded the correct data.");
         }
         this.loadedItems.selectedMapUrl = items.selectedMapUrl;
+        // As this is not the first state, the event listener must be added during
+        // loading, to prevent a key pressed in the previous state to register in 
+        // this state too.
+        document.addEventListener("keydown", this.keydownHandler);
     }
 
     /**
@@ -167,11 +170,13 @@ export class SelectTankState extends GameState {
                 }
                 break;
             case "Escape":
-                // Move back to start screen.
-                // The function must have a timeout, otherwise the redirect fails with the
-                // NS_BINDING_ABORTED flag.
-                setTimeout(function () { document.location = "/index.html"; }, 500);
-                return false;
+                // Move back to start screen, but prompt the user first.
+                if (confirm("Are you sure you want to leave the game?")) {
+                    // The function must have a timeout, otherwise the redirect fails with the
+                    // NS_BINDING_ABORTED flag.
+                    setTimeout(function () { document.location = "/index.html"; }, 500);
+                    return false;
+                }
         }
 
         this.timeValues.startTime = this.timeValues.time;

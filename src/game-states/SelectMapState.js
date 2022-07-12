@@ -56,6 +56,7 @@ export class SelectMapState extends GameState {
         await this._setupCurrentMap();
 
         this.keydownHandler = this.keydownHandler.bind(this);
+        // As this is the first state, the event listener is added during initialization.
         document.addEventListener("keydown", this.keydownHandler);
     }
 
@@ -150,11 +151,13 @@ export class SelectMapState extends GameState {
                 this.exitCode = this.exitCodes.stateFinished;
                 break;
             case "Escape":
-                // Move back to start screen.
-                // The function must have a timeout, otherwise the redirect fails with the
-                // NS_BINDING_ABORTED flag.
-                setTimeout(function () { document.location = "/index.html"; }, 500);
-                return false;
+                // Move back to start screen, but prompt the user first.
+                if (confirm("Are you sure you want to leave the game?")) {
+                    // The function must have a timeout, otherwise the redirect fails with the
+                    // NS_BINDING_ABORTED flag.
+                    setTimeout(function () { document.location = "/index.html"; }, 500);
+                    return false;
+                }
         }
 
         this.timeValues.startTime = this.timeValues.time;

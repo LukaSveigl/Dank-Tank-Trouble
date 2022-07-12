@@ -44,7 +44,6 @@ export class RunningGameState extends GameState {
         this.renderer = new Renderer(this.gl);
 
         this.keydownHandler = this.keydownHandler.bind(this);
-        document.addEventListener("keydown", this.keydownHandler);
     }
 
     /**
@@ -79,6 +78,10 @@ export class RunningGameState extends GameState {
         this.loadedItems.selectedTankUrl = items.selectedTankUrl;
         console.log(this.loadedItems);
         await this._setupGameObjects();
+        // As this is not the first state, the event listener must be added during
+        // loading, to prevent a key pressed in the previous state to register in 
+        // this state too.
+        document.addEventListener("keydown", this.keydownHandler);
     }
 
     /**
